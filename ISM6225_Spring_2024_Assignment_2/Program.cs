@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment_2
 {
@@ -62,12 +63,23 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new List<int>(); // Placeholder
+                int n = nums.Length;
+                HashSet<int> numbersSet = new HashSet<int>(nums);  // Store existing numbers
+                List<int> missingNumbers = new List<int>();
+
+                for (int i = 1; i <= n; i++)  // Check for missing numbers in range 1 to n
+                {
+                    if (!numbersSet.Contains(i))
+                    {
+                        missingNumbers.Add(i);
+                    }
+                }
+                return missingNumbers;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in FindMissingNumbers: " + ex.Message);
+                return new List<int>();
             }
         }
 
@@ -76,12 +88,13 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                // Sort in place, even numbers first
+                return nums.OrderBy(x => x % 2).ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in SortArrayByParity: " + ex.Message);
+                return new int[0];
             }
         }
 
@@ -90,12 +103,22 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return new int[0]; // Placeholder
+                Dictionary<int, int> numDict = new Dictionary<int, int>();
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    int complement = target - nums[i];  // Find the complement
+                    if (numDict.ContainsKey(complement))  // If complement exists, return indices
+                    {
+                        return new int[] { numDict[complement], i };
+                    }
+                    numDict[nums[i]] = i;  // Store the number and its index
+                }
+                return new int[0];
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in TwoSum: " + ex.Message);
+                return new int[0];
             }
         }
 
@@ -104,12 +127,18 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                Array.Sort(nums);  // Sort the array
+                int n = nums.Length;
+
+                // The maximum product can be either:
+                // 1. Product of the largest three numbers
+                // 2. Product of the two smallest numbers (both negative) and the largest number
+                return Math.Max(nums[n - 1] * nums[n - 2] * nums[n - 3], nums[0] * nums[1] * nums[n - 1]);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in MaximumProduct: " + ex.Message);
+                return 0;
             }
         }
 
@@ -118,12 +147,12 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return "101010"; // Placeholder
+                return Convert.ToString(decimalNumber, 2);  // Use built-in function to convert decimal to binary
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in DecimalToBinary: " + ex.Message);
+                return string.Empty;
             }
         }
 
@@ -132,12 +161,25 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                int left = 0, right = nums.Length - 1;
+                while (left < right)
+                {
+                    int mid = left + (right - left) / 2;
+                    if (nums[mid] > nums[right])  // Minimum is in the right half
+                    {
+                        left = mid + 1;
+                    }
+                    else  // Minimum is in the left half
+                    {
+                        right = mid;
+                    }
+                }
+                return nums[left];  // Left will be the minimum element
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in FindMin: " + ex.Message);
+                return int.MaxValue;
             }
         }
 
@@ -146,12 +188,21 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return false; // Placeholder
+                if (x < 0) return false;  // Negative numbers are not palindromes
+
+                int reversed = 0, original = x;
+                while (x > 0)
+                {
+                    int digit = x % 10;
+                    reversed = reversed * 10 + digit;
+                    x /= 10;
+                }
+                return original == reversed;  // Check if the original number is the same as the reversed number
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in IsPalindrome: " + ex.Message);
+                return false;
             }
         }
 
@@ -160,12 +211,21 @@ namespace Assignment_2
         {
             try
             {
-                // Write your code here
-                return 0; // Placeholder
+                if (n <= 1) return n;  // Base cases
+
+                int a = 0, b = 1, c;
+                for (int i = 2; i <= n; i++)  // Loop to calculate Fibonacci
+                {
+                    c = a + b;
+                    a = b;
+                    b = c;
+                }
+                return b;  // Return the nth Fibonacci number
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine("Error in Fibonacci: " + ex.Message);
+                return 0;
             }
         }
     }
